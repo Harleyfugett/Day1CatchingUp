@@ -1,8 +1,11 @@
 //This is library imports.
 //createRoot is controlling the contents inside the app container and is allowing it to be rendered into the DOM.
-import { createRoot } from "react-dom/client"
+import { createRoot } from "react-dom/client";
 //These are React hooks, The Effect Hook allows you to perform side effects in function components, side effects such as "Data fetching, changing the dom, or setting up data within the code from the DOM"
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
+
 
 
 //This is the function expression that allows for a React function to return JSX code
@@ -10,6 +13,8 @@ const App = () => {
 
     //Created state that will be able to hold the eventual data from a fetch
     const [products, setProducts] = useState([]);
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     async function fetchProductData() {
 
@@ -51,37 +56,43 @@ const App = () => {
 
     //I am now rendering the JS state to the DOM, using the .map method as I've put my data into an Array
     return (
-        <div>
-            {
-                //By saying products.length I am allowing JS to see if it has a length of 0 or more, to which if it loads no State content then it's 0 and will default to the <div> written below giving an error message.
-                //Products.map is seeking through every object in the products data using a .method, combing through the now translated data of singleProductElement. I've given it the capability of naming every object spat out with a key of idx to individualize each object further in the code.
-                    products.length ? products.map((singleProductElement, idx) => {
-                        return (
-                            //By combing through the singleProducts element I can look for key tags to bring them forward onto the dom and display it.
-                            //I've also managed to grab the images for each product and have them display from their own arrays, also making it so that when they don't load it'll display the product's ID instead
-                            //I've taken every tag and put them into a <p> tag and them I'm directing to the objects given to me and I manually made them listed out with each object getting their tags below their Product Posts, keeping it clean using the .map method and allowing for individual object elements
-                            <div key="idx">
-                                <p>ID: {singleProductElement.id}</p>
-                                {singleProductElement.images.map((image, index) => (
-                                    <img src={image} alt={`Product ${singleProductElement.id} image ${index}`} />
-                                ))}
-                                <p>Price: {singleProductElement.price}</p>
-                                <p>Brand: {singleProductElement.brand}</p>
-                                <p>Category: {singleProductElement.category}</p>
-                                <p>Description: {singleProductElement.description}</p>
-                                <p>Discount Percentage: {singleProductElement.discountPercentage}</p>
-                                <p>Rating: {singleProductElement.rating}</p>
-                                <p>Stock: {singleProductElement.stock}</p>
-                                <p>Title: {singleProductElement.title}</p>
-                            </div>
-                        )
-                    
+        
+            <div>
+                {
+                    //By saying products.length I am allowing JS to see if it has a length of 0 or more, to which if it loads no State content then it's 0 and will default to the <div> written below giving an error message.
+                    //Products.map is seeking through every object in the products data using a .method, combing through the now translated data of singleProductElement. I've given it the capability of naming every object spat out with a key of idx to individualize each object further in the code.
+                        products.length ? products.map((singleProductElement, idx) => {
+                            return (
+                                //By combing through the singleProducts element I can look for key tags to bring them forward onto the dom and display it.
+                                //I've also managed to grab the images for each product and have them display from their own arrays, also making it so that when they don't load it'll display the product's ID instead
+                                //I've taken every tag and put them into a <p> tag and them I'm directing to the objects given to me and I manually made them listed out with each object getting their tags below their Product Posts, keeping it clean using the .map method and allowing for individual object elements
+                                <div key="idx">
+                                    <p>ID: {singleProductElement.id}</p>
+                                    {singleProductElement.images.map((image, index) => (
+                                        <img src={image} alt={`Product ${singleProductElement.id} image ${index}`} />
+                                    ))}
+                                    <p>Price: {singleProductElement.price}</p>
+                                    <p>Brand: {singleProductElement.brand}</p>
+                                    <p>Category: {singleProductElement.category}</p>
+                                    <p>Description: {singleProductElement.description}</p>
+                                    <p>Discount Percentage: {singleProductElement.discountPercentage}</p>
+                                    <p>Rating: {singleProductElement.rating}</p>
+                                    <p>Stock: {singleProductElement.stock}</p>
+                                    <p>Title: {singleProductElement.title}</p>
+                                </div>
+                            )
+                        
 
 
-                    //Error message for when there is no data available to load onto the DOM
-                }) : <div>No data loaded</div>
-            }
-        </div>
+                        //Error message for when there is no data available to load onto the DOM
+                    }) : <div>No data loaded</div>
+                }
+            </div>
+
+            // <Routes>
+            //     <Route path="/register" element={<RegisterForm />} />
+            // </Routes>
+        
     )
 }
 
